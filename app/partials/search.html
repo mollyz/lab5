@@ -1,0 +1,52 @@
+<!-- We include the sidebar as it is shared across two screens. -->
+<ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
+
+<!-- TODO in Lab 5: Display the input box for search (you can ignore the type dropdown since BigOven does
+not support it in free version) and list all the dishes that match the search. -->
+<div class="col-md-9"id="searchArea" style="display:none;">
+    <div id="selectDish">
+        <h2>Select Dish</h2>
+        <hr>
+        <div class="row">
+        	<div class="col-sm-2 paddingRightNone">
+        		<form name="what">
+                <input ng-model="" type="text" id="inputKeyword">
+                </form>
+            </div>
+
+            <div class="col-sm-2">
+                <div ng-click="" class="toolButton paddingLeftNone" id="searchButton">search</div>
+            </div>
+            
+            <div class="col-md-8">
+                <select id="courseType" ng-model="">
+                    <option value="appetizers" selected>Appetizers</option>
+                    <option value="main+dish">Main Dish</option>
+                    <option value="dessert">Dessert</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="showList">
+    	<div class="floating-box" ng-click="">
+    		<div><img id="myDishes.RecipeID" class="borderAll" ng-src="{{myDishes.ImageURL120}}" alt="{{myDishes.Title}}"/></div>
+			<div class="textMiddle">{{myDishes.Title}}</div>
+			<div style="padding: 5px;overflow: auto;">{{detailDish.Description}}</div>
+		</div>
+    </div>
+</div>
+
+<!-- example in instruction
+<input ng-model="query"/>
+<button ng-click="search(query)">Find</button>
+{{status}}
+<ul>
+ <li ng-repeat="dish in dishes">
+ <img ng-src="{{dish.ImageURL}}"/>
+ {{dish.Title}}
+ <a ng-href="#/dish/{{dish.RecipeID}}">View more</a>
+ {{dish.Category}} {{dish.Subcategory}}
+ </li>
+</ul>
+-->
