@@ -16,6 +16,97 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     return numberOfGuest;
   }
 
+  this.getFullMenu = function(){
+    var allDishes = [];
+    
+    for(var i=0; i<menuID.length;i++){
+      if(menuID[i].id!=0){
+        
+        var dish=this.getDish(menuID[i].id);
+      
+      allDishes.push(dish);
+      }
+    }
+    return allDishes;
+  }
+
+  this.removeDishFromMenu = function(){
+      for(key in menuID){ 
+      if( menuID[key].id == id)
+      {
+        menuID[key].id=0;
+      }
+    }
+  }
+
+  this.getDish =function(){
+    var url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
+    var result='';
+    $.ajax({
+             type: "GET",
+             dataType: 'json',
+             async: false,
+             url: url,
+             success: function (data) {
+                
+                //alert('success');
+                 result=data;
+                console.log("计数君");
+                }
+             });
+     return result;
+    }
+
+  this.setDetailID=function(id){
+    DetailID=id;
+    notifyObservers("detail");
+    console.log("收到了set");
+  }
+  this.getDetailID=function(){
+    console.log("收到了get");
+    return DetailID;
+  }
+
+  this.addDishToMenu = function(){
+    var dish = this.getDish(id);
+
+    for(key in menuID){ 
+      if(menuID[key].Category==dish.Category){
+        
+          menuID[key].id=dish.RecipeID;
+      }
+    }
+  }
+  this.getPriceForDish = function(data) {
+    var dishPrice = 0;
+    var dishIngredients = data.Ingredients;
+    for(key in dishIngredients){
+      dishPrice += dishIngredients[key].Quantity;
+    }
+    return parseFloat(dishPrice.toFixed(2));
+    };
+
+
+  this.getFullMenu = function() {
+    var allDishes = [];
+    for(var i=0; i<menuID.length;i++){
+      if(menuID[i].id!=0){
+        var dish=this.getDish(menuID[i].id);
+      allDishes.push(dish);
+      }
+    }
+    return allDishes;
+  }
+
+  this.getTotalMenuPrice =function(){
+    var totalPrice=0
+    var dish=this.getFullMenu();
+    for (key in dish){
+      totalPrice += this.getPriceForDish(dish[key]);
+    }
+    totalPrice = totalPrice*this.getNumberOfGuests();
+    return totalPrice;
+  }
 
   // TODO in Lab 5: Add your model code from previous labs
   // feel free to remove above example code
