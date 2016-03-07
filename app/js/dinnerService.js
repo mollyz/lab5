@@ -4,8 +4,16 @@
 // service is created first time it is needed and then just reuse it
 // the next time.
 dinnerPlannerApp.factory('Dinner',function ($resource) {
-  
+  this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:15,api_key:'d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1'});
+  this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key:'d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1'}); 
+
   var numberOfGuest = 2;
+  var menuID = [{'Category':'Appetizers','id': 0},{'Category':'Main Dish','id': 0},{'Category':'Desserts','id': 0}];
+  var Type="appetizers";
+  var Filter=null;
+  var DetailID=0;
+  var pendingID=0;
+
 
 
   this.setNumberOfGuests = function(num) {
@@ -29,6 +37,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     }
     return allDishes;
   }
+
 
   this.removeDishFromMenu = function(){
       for(key in menuID){ 
@@ -59,7 +68,6 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
 
   this.setDetailID=function(id){
     DetailID=id;
-    notifyObservers("detail");
     console.log("收到了set");
   }
   this.getDetailID=function(){
@@ -86,17 +94,6 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     return parseFloat(dishPrice.toFixed(2));
     };
 
-
-  this.getFullMenu = function() {
-    var allDishes = [];
-    for(var i=0; i<menuID.length;i++){
-      if(menuID[i].id!=0){
-        var dish=this.getDish(menuID[i].id);
-      allDishes.push(dish);
-      }
-    }
-    return allDishes;
-  }
 
   this.getTotalMenuPrice =function(){
     var totalPrice=0

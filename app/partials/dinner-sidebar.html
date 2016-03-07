@@ -5,21 +5,19 @@
  <div class="col-md-3 sidenav" id="sideNavView">
 	<div class="row">
 		<h2>My Dinner</h2>
-		People: <input type="number" class="col-md-3" ng-model="numberOfGuests" ng-change="setNumberOfGuest(numberOfGuests)"/>
-            <div class="col-md-9">
-                <button id="minusGuest" class="btn">-</button>
-
-                <span id="numberOfGuests">0</span>
-
-                <button id="plusGuest" class="btn">+</button>
-            </div>
-
+		<div> People: <input type="number" ng-model="numberOfGuests" ng-change="setNumberOfGuest(numberOfGuests)"/></div>
+    
       	<br>
-      	<div class="row-fluid" id="PriceTable" ng-repeat="">
-      		<div class="row">
+      	<div class="row-fluid" id="PriceTable">
+          <div class="row" id="Heading">
+            <div class='col-sm-7'>Name:</div>
+            <div class='col-sm-4'>Cost:</div>
+          </div>
+
+      		<div class="row" ng-repeat="">
       			<div class="col-sm-7">{{item.Title}}</div>
       			<div class="col-sm-3">{{priceForAllPeople}}</div>
-      			<div class="col-sm-1"><img ng-click="" class="removeButton" id="item.RecipeID" src="remove.png"></div>
+      			<div class="col-sm-1"><img ng-click="" class="removeButton" id="{{item.RecipeID}}" src="remove.png"></div>
       		</div>
       		<div class="row">
       			<div class="col-sm-7">Pending</div>
@@ -28,7 +26,7 @@
       		</div>
       		<div class="row">
       			<div class="col-sm-7">Total:</div>
-      			<div class="col-sm-4" > {{totalPriceForMenu}} SEK</div>
+      			<div class="col-sm-4"> {{totalPriceForMenu}} SEK</div>
       		</div>
       	</div>
       	<br>
