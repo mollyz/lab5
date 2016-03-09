@@ -12,9 +12,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   var Type="appetizers";
   var Filter=null;
   var DetailID=0;
-  var pendingID=0;
-
-
+  var apiKey = "d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1"
 
   this.setNumberOfGuests = function(num) {
     numberOfGuest = num;
@@ -23,6 +21,64 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   this.getNumberOfGuests = function() {
     return numberOfGuest;
   }
+this.getDish=function(id){
+  var url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
+  var result='';
+  $.ajax({
+           type: "GET",
+           dataType: 'json',
+           async: false,
+           url: url,
+           success: function (data) {
+              
+              //alert('success');
+               result=data;
+              console.log("计数君");
+              }
+           });
+   return result;
+  };
+
+
+      this.getAllDishes = function (type,filter) {
+    if(filter==undefined){
+      var url = "http://api.bigoven.com/recipes?pg=1&rpp=10&any_kw="
+                  + type 
+                  + "&api_key="+apiKey;
+                  console.log("jinlaile1= "+url);
+        }else{
+            var url="http://api.bigoven.com/recipes?pg=1&rpp=10&any_kw="
+                  + type+"+"+filter
+                  + "&api_key="+apiKey;
+                  console.log("jinlaile2 " +url)
+        }
+        var result='';
+        $.ajax({
+            type: "GET",
+            dataType: 'json',
+            async: false,
+            url: url,
+            success: function (data) {
+                //alert('success');
+                
+                result=data.Results;
+                
+                
+            }
+        });
+        return result;
+      }
+
+  
+  this.setPendingID = function(id){
+    
+    pendingID=id;
+  };
+
+  this.getPendingID = function(){
+    return pendingID;
+  };
+  
 
   this.getFullMenu = function(){
     var allDishes = [];
@@ -38,8 +94,7 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     return allDishes;
   }
 
-
-  this.removeDishFromMenu = function(){
+    this.removeDishFromMenu = function(){
       for(key in menuID){ 
       if( menuID[key].id == id)
       {
@@ -48,34 +103,22 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
     }
   }
 
-  this.getDish =function(){
-    var url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
-    var result='';
-    $.ajax({
-             type: "GET",
-             dataType: 'json',
-             async: false,
-             url: url,
-             success: function (data) {
-                
-                //alert('success');
-                 result=data;
-                console.log("计数君");
-                }
-             });
-     return result;
+
+    this.getAllIngredients = function(dish) {
+    var allIngredients = [];
+
+    var ingredients = dish.Ingredients;
+    console.log(ingredients);
+
+    for(ingredient in ingredients){
+      allIngredients.push(ingredient);
     }
 
-  this.setDetailID=function(id){
-    DetailID=id;
-    console.log("收到了set");
-  }
-  this.getDetailID=function(){
-    console.log("收到了get");
-    return DetailID;
+    return allIngredients;
   }
 
-  this.addDishToMenu = function(){
+
+  this.addDishToMenu = function(id){
     var dish = this.getDish(id);
 
     for(key in menuID){ 
@@ -85,6 +128,9 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
       }
     }
   }
+
+
+
   this.getPriceForDish = function(data) {
     var dishPrice = 0;
     var dishIngredients = data.Ingredients;

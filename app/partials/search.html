@@ -3,7 +3,7 @@
 
 <!-- TODO in Lab 5: Display the input box for search (you can ignore the type dropdown since BigOven does
 not support it in free version) and list all the dishes that match the search. -->
-<div class="col-md-9"id="searchArea">
+<div class="col-md-9"id="searchArea" ng-init="search(query2)">
     <div id="selectDish">
         <h2>Select Dish</h2>
         <hr>
@@ -14,8 +14,8 @@ not support it in free version) and list all the dishes that match the search. -
             </div>
             
             <div class="col-md-8">
-                <select id="courseType" ng-model="myCourseType">
-                    <option value="appetizers" selected>Appetizers</option>
+                <select id="courseType" ng-model="query2" ng-change="search(query2)" ng-init=" query2='appetizers'" >
+                    <option value="appetizers" >Appetizers</option>
                     <option value="main+dish">Main Dish</option>
                     <option value="dessert">Dessert</option>
                 </select>
@@ -31,16 +31,19 @@ not support it in free version) and list all the dishes that match the search. -
 		</div>
     </div>
 </div> -->
+     {{status}}
     <div id="showList">
-        {{status}}
-        <ul>
-             <li ng-repeat="dish in dishes">
-                 <img ng-src="{{dish.ImageURL}}"/>
+            <div class="floating-box"  ng-repeat="dish in dishes">  
+                 <img ng-href="#/dish/{{dish.RecipeID}}" ng-src="{{dish.ImageURL}}"/>
+                 <br>
                  {{dish.Title}}
+                 <br>
                  <a ng-href="#/dish/{{dish.RecipeID}}">View more</a>
-             {{dish.Category}} {{dish.Subcategory}}
-             </li>
-        </ul>
+                 <br>
+                 {{dish.Category}} 
+                 <br>
+                {{dish.Subcategory}}
+             </div>
     </div>
 
 </div>

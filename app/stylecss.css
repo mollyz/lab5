@@ -1,3 +1,17 @@
+#searchArea{
+	background-color: rgba(242, 242, 242,0.8);
+}
+#showList{
+	background-color: rgba(242, 242, 242,0.8);
+	position: float;
+}
+#detailView{
+	background-color: rgba(242, 242, 242,0.8);
+}
+#sideNavView{
+	background-color: rgba(242, 242, 242,0.8);
+}
+
 #inputKeyword{
 	width: 100%;
 
@@ -185,9 +199,7 @@ select{
 #DinnerPreparation{
 	background-color: white;
 }
-.showList{
-	position: float;
-}
+
 .floating-box {
     float: left;
     width: 144px;

@@ -1,5 +1,4 @@
-// Dinner controller that we use whenever we want to display detailed
-// information for one dish
+
 dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
   
   // TODO in Lab 5: you need to get the dish according to the routing parameter
@@ -14,19 +13,34 @@ dinnerPlannerApp.controller('DishCtrl', function ($scope,$routeParams,Dinner) {
   $scope.getNumberOfGuests = function() {
     return Dinner.getNumberOfGuests();
   }
+      
+  $scope.pendingID = $routeParams.dishId;
 
-  $scope.DetailID = Dinner.getDetailID();
-  $scope.detailDish= Dinner.getDish(DetailID)
-  $scope.priceForSingle = Dinner.getPriceForDish(item.RecipeID)
+    $scope.getDish=function(){
+        $scope.status ="loading";
+        Dinner.Dish.get({id:$scope.pendingID},function(data){
+            $scope.getNumberOfGuests=function(){
+                return Dinner.getNumberOfGuests();
+            }
+            $scope.detailDish = data;
+            $scope.dishIngredients = data.Ingredients;
+            console.log(data.Ingredients[0].Name);
+            $scope.status = "continue";
 
-  $scope.totalPrice = function(items){
-  	return priceForSingle * Dinner.getNumberOfGuests();
-  }
+            $scope.totalPrice=Dinner.getPriceForDish(data);
+            console.log($scope.totalPrice);
 
-  $scope.menuDish = Dinner.getFullMenu();
+        });
+    };
+    
+    $scope.setPendingDish = function(id){
+      Dinner.setPendingID(data);
+      pendingDish=Dinner.getDish(pendingID)
+    }   
 
-  $scope.addDishToMenu = function(){
-  	$scope.menuDish.push(this.recipe);
-  }
+    $scope.addDishToMenu = function(id){
+      Dinner.addDishToMenu(id);
+      Dinner.setPendingDish(0);
+    }
 
 });

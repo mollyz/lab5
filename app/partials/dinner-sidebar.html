@@ -17,7 +17,7 @@
       		<div class="row" ng-repeat="">
       			<div class="col-sm-7">{{item.Title}}</div>
       			<div class="col-sm-3">{{priceForAllPeople}}</div>
-      			<div class="col-sm-1"><img ng-click="" class="removeButton" id="{{item.RecipeID}}" src="remove.png"></div>
+      			<div class="col-sm-1"><img ng-click="deleteItem" class="removeButton" id="{{item.RecipeID}}" src="remove.png"></div>
       		</div>
       		<div class="row">
       			<div class="col-sm-7">Pending</div>
@@ -32,7 +32,7 @@
       	<br>
 	    <div class="row-fluid">
 	            <div class="col-sm-2"></div>
-	            <div class="col-md-8"><button ng-click="" id="confirmDinner">Confirm Dinner</button></div>
+	            <div class="col-md-8"><a href="#/overview" class="toolButton " id="confirmDinner">Confirm Dinner</a></div>
 	            <div class="col-sm-2"></div>
         </div>
   	</div>

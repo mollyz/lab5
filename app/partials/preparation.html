@@ -1,0 +1,34 @@
+<div class="jumbotron" id="topBar" style="padding:0px;margin:0px;">
+    <div id="summaryHeading">
+        <div class="table1">
+            <div class="tableCell">
+                <div class="content" id="totalNum">
+                   <h2>My Dinner: {{getNumberOfGuests()}} People.</h2>
+                </div>
+            </div>
+        </div>
+        <div class="table2" id="table2">
+            <div class="tableCell">
+                <div class="content">
+                    <a class="bigButton" href="#/search"id="editMenu">Go back and edit menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="dinnerPreparation">
+    <div id="dinnerPre" ng-repeat="item in menuDish">
+        <div class='row padding' >
+        	<div class='col-md-2'><img class='borderAll' src='{{item.ImageURL}}'></div>
+        	<div class='col-md-4'>
+        		<h2>{{item.Title}}</h2>
+        		<p>{{item.Description}}</p>
+        	</div>
+        	<div class='col-md-6'>
+        		<h4>Preparation</h4>
+        		<p>{{item.Instructions}}</p>
+        	</div>
+        </div>
+    </div>
+</div>   

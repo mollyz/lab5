@@ -1,9 +1,7 @@
-<!-- We include the sidebar as it is shared across two screens. -->
+
 <ng-include src="'partials/dinner-sidebar.html'" ng-controller="DinnerCtrl"></ng-include>
 
-<!-- TODO in Lab 5: Display the dish information including image, Description, 
-Instructions, Ingredients and total cost. -->
-<div class="col-md-9" id="detailView" style="display:none;">
+<div class="col-md-9" id="detailView" ng-init="getDish();">
     <div class="row">
         <div class="col-md-5" >
             <div id="detailDish">
@@ -11,11 +9,8 @@ Instructions, Ingredients and total cost. -->
             	<img ng-src="{{detailDish.ImageURL}}"/>
             	<br>
 		   		<p>{{detailDish.Description}}</p>
-		   		<br>
-		   		<h1>PREPARATION</h1>
-		   		<p>{{detailDish.Instructions}}</p>
 		   	</div>
-           	<div ng-click="" class="col-md-4 toolButton" id="backToSelect">Back to Select Dish</div>
+           	<a href="#/search"  class="col-md-4 toolButton" id="backToSelect">Back to Select Dish</a>
          </div>
         
         <div class="col-md-7" id="Ingredient">
@@ -29,8 +24,8 @@ Instructions, Ingredients and total cost. -->
 		              <th>Ingredient</th>
 		              <th>Cost</th>
 		            </tr>
-		            <tr ng-repeat="">
-		            	<td>{{item.Quantity}}{{item.Unit}}</td>
+		            <tr ng-repeat="item in detailDish">
+		            	<td>{{item.Quantity*getNumberOfGuest().toFix(2)}}{{item.Unit}}</td>
 		            	<td>{{item.Name}}</td>
 		            	<td>{{getNumberOfGuests()}}</td>
 		            </tr>
@@ -40,11 +35,15 @@ Instructions, Ingredients and total cost. -->
             <hr>
             <div class="row">
                 <div class="col-md-6">
-                    <div ng-click="" class="toolButton " id="confirmDish">Confirm Dish</div>
+                    <div href="#/search" ng-click="addDishToMenu(detailDish)" class="toolButton " id="confirmDish">Confirm Dish</div>
                 </div>
                 <div style="text-align: right;"class="col-md-3">SEK</div>
-                <div style="text-align: right;border:1px solid black;" class="col-md-2 totalPrice" id="ingredientTotal">{{totalPrice}}</div>
+                <div style="text-align: right;border:1px solid black;" class="col-md-2 totalPrice" id="ingredientTotal">{{totalPrice*getNumberOfGuest}}</div>
             </div>
         </div>
+    </div>
+    <div id="preparation" >
+        <h1>PREPARATION</h1>
+        <p>{{detailDish.Instructions}}</p>
     </div>
 </div>
