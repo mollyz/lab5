@@ -3,7 +3,7 @@
 // dependency on any service you need. Angular will insure that the
 // service is created first time it is needed and then just reuse it
 // the next time.
-dinnerPlannerApp.factory('Dinner',function ($resource) {
+dinnerPlannerApp.factory('Dinner',function ($cookieStore,$resource) {
   this.DishSearch = $resource('http://api.bigoven.com/recipes',{pg:1,rpp:15,api_key:'d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1'});
   this.Dish = $resource('http://api.bigoven.com/recipe/:id',{api_key:'d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1'}); 
 
@@ -15,11 +15,13 @@ dinnerPlannerApp.factory('Dinner',function ($resource) {
   var apiKey = "d6Wz1E41ENng5iGi9xAbE6Mc64F4fZj1"
 
   this.setNumberOfGuests = function(num) {
+    $cookieStore.put('numberOfGuest',num);
     numberOfGuest = num;
+ 
   }
 
   this.getNumberOfGuests = function() {
-    return numberOfGuest;
+    return $cookieStore.get('numberOfGuest');
   }
 this.getDish=function(id){
   var url = "http://api.bigoven.com/recipe/" + id + "?api_key="+apiKey;
@@ -71,7 +73,6 @@ this.getDish=function(id){
 
   
   this.setPendingID = function(id){
-    
     pendingID=id;
   };
 
@@ -120,7 +121,6 @@ this.getDish=function(id){
 
   this.addDishToMenu = function(id){
     var dish = this.getDish(id);
-
     for(key in menuID){ 
       if(menuID[key].Category==dish.Category){
         
